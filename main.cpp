@@ -7,7 +7,7 @@ int main()
 	sf::CircleShape shape(100.f);
 	shape.setFillColor(sf::Color::Green);
 
-	std::cout << "Lauren is dumb" << std::endl;
+	std::cout << "Mitchell is dumb" << std::endl;
 
 	while (window.isOpen())
 	{
