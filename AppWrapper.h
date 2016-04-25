@@ -4,15 +4,19 @@
 #include "Wall.h"
 #include "Ball.h"
 
+// Manages the game board and gameplay of the game
 class AppWrapper
 {
 	
 	public:
-		void runGame();
+		AppWrapper(); // Constructor calls createGameBox()
 
+		void runGame();
 
 	private:
 		Wall mBox[4];
 		Ball mBall;
-		int counter;
+		int mScore;
+
+		void createGameBox();
 };

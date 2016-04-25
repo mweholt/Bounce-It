@@ -1,7 +1,15 @@
 #include "Ball.h"
 
-Ball::Ball()
+
+Ball::Ball() : CircleShape(20.f)
 {
-	sf::CircleShape gameBall(20); //creating the circle shape called Ball
-	gameBall.
+	this->setFillColor(sf::Color::Red);
+	this->setOutlineColor(sf::Color::Blue);
+	this->setOutlineThickness(5);
 }
+
+Ball::~Ball()
+{
+	std::cout << "Inside Ball's destructor." << std::endl;
+}
+
