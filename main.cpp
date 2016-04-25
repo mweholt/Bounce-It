@@ -4,6 +4,5 @@ int main()
 {
 	SFMLDemo();
 
-
 	return 0;
 }
