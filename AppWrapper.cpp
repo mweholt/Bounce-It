@@ -1,31 +1,26 @@
 #include "AppWrapper.h"
 
+AppWrapper::AppWrapper() // Constructor
+{
+	createGameBox();
+}
+
 void AppWrapper::runGame()
 {
-	sf::RenderWindow window(sf::VideoMode(600, 1000), "Totally awesome!");
-
+	sf::RenderWindow window(sf::VideoMode(840, 1450), "Totally awesome game!");
 
 	while (window.isOpen())
 	{
-		sf::Event event;
+		window.draw(mBox[0]);
+		window.draw(mBox[1]);
+		window.draw(mBox[2]);
+		window.draw(mBox[3]);
 
-		sf::Text text;
-		//atext.setFont();
-		text.setString("HelloWorld");
-		text.setCharacterSize(20);
-		text.setStyle(sf::Text::Bold);
-		text.setColor(sf::Color::White);
-		text.setPosition(0, 0);
-		window.draw(text);
-		window.clear(sf::Color::Green);
 		window.display();
-
-		window.clear();
 	}
 }
 
 void AppWrapper::createGameBox()
 {
-
-
+	// Need to add this code. Creating a dashed line isn't super easy
 }

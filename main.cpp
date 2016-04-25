@@ -3,10 +3,10 @@
 
 int main()
 {
-	SFMLDemo();
-	 //AppWrapper game1;
+	//SFMLDemo();
+	AppWrapper game1;
 
-	 //game1.runGame();
+	game1.runGame();
 
 	return 0;
 }
