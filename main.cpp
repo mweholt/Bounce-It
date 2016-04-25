@@ -1,27 +1,11 @@
-#include <SFML/Graphics.hpp>
-#include <iostream>
+// This code expands on the tutorial code provided at:
+// http://www.sfml-dev.org/tutorials/2.3/start-vc.php
+
+#include "DEMO.h"
 
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
-	sf::CircleShape shape(100.f);
-	shape.setFillColor(sf::Color::Green);
-
-	std::cout << "Lauren is dumb" << std::endl;
-
-	while (window.isOpen())
-	{
-		sf::Event event;
-		while (window.pollEvent(event))
-		{
-			if (event.type == sf::Event::Closed)
-				window.close();
-		}
-
-		window.clear();
-		window.draw(shape);
-		window.display();
-	}
+	SFMLDemo();
 
 	return 0;
 }
