@@ -4,6 +4,7 @@
 #include "Wall.h"
 #include "Ball.h"
 
+// Manages the game board and gameplay of the game
 class AppWrapper
 {
 	
@@ -12,7 +13,7 @@ class AppWrapper
 
 
 	private:
-		Wall mBox[4];
+		//Wall mBox[4];
 		Ball mBall;
-		int counter;
+		int mScore;
 };
