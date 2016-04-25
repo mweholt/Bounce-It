@@ -2,12 +2,11 @@
 
 #include <SFML/Graphics.hpp>
 
-class Ball
+class Ball : public sf::CircleShape
 {
 public:
 	Ball(); //constructor
 	~Ball(); //destructor
-	Ball(Ball &rhs); // Copy constructor
-
-
+	//Ball(Ball &rhs); // Copy constructor
+	//blah
 };
