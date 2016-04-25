@@ -23,3 +23,9 @@ void AppWrapper::runGame()
 		window.clear();
 	}
 }
+
+void AppWrapper::createGameBox()
+{
+
+
+}

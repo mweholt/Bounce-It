@@ -13,7 +13,10 @@ class AppWrapper
 
 
 	private:
-		//Wall mBox[4];
+		Wall mBox[4];
 		Ball mBall;
 		int mScore;
+
+
+		void createGameBox();
 };
