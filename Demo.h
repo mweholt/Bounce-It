@@ -2,6 +2,7 @@
 // http://www.sfml-dev.org/tutorials/2.3/start-vc.php
 
 #include <SFML/Graphics.hpp>
+#include "Ball.h"
 
 int SFMLDemo();
 
@@ -15,11 +16,14 @@ int SFMLDemo()
 
 	sf::RectangleShape paddle(sf::Vector2f(10, 50));
 	paddle.setFillColor(sf::Color::Red);
+	Ball gameBall;
 
 	int i = 0;
 	while (window.isOpen())
 	{
 		sf::Event event;
+
+		window.draw(gameBall);
 
 		//window.draw(s);
 		while (window.pollEvent(event))
@@ -32,11 +36,11 @@ int SFMLDemo()
 				// which key is pressed
 				if (event.key.code == sf::Keyboard::W) // move up
 				{
-					paddle.setPosition(4, 4 + (--i));
+					gameBall.setPosition(4, 4 + (--i));
 				}
 				if (event.key.code == sf::Keyboard::S) // move down
 				{
-					paddle.setPosition(4, 4 + (++i));
+					gameBall.setPosition(4, 4 + (++i));
 				}
 			}
 		}
@@ -51,7 +55,9 @@ int SFMLDemo()
 		shape2.setPosition(4 + i, 200);
 		window.draw(shape);
 		window.draw(shape2);*/
-		window.draw(paddle); // draw the paddle in the new position
+		window.draw(gameBall); // draw the paddle in the new position\*
+		
+		
 
 		window.display();
 
