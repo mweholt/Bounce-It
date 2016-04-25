@@ -8,6 +8,5 @@ public:
 	Ball(); //constructor
 	~Ball(); //destructor
 	Ball(Ball &rhs); // Copy constructor
-
-
+	//mitchell sucks
 };

@@ -3,5 +3,5 @@
 Ball::Ball()
 {
 	sf::CircleShape gameBall(20); //creating the circle shape called Ball
-	gameBall.
+	gameBall.setFillColor
 }
