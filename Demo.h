@@ -18,6 +18,7 @@ int SFMLDemo()
 
 	sf::RectangleShape paddle(sf::Vector2f(10, 50));
 	paddle.setFillColor(sf::Color::Red);
+	
 	Ball gameBall;
 
 	int i = 0;

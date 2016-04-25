@@ -1,13 +1,13 @@
 #include "Ball.h"
 
-Ball::Ball() : CircleShape()
+Ball::Ball() : CircleShape(100.f)
 {
-	CircleShape gameBall(50.f); //creating the circle shape called Ball
-	gameBall.setFillColor(sf::Color::Red); //setting the ball color to red
+	this->setFillColor(sf::Color::Red);
+	this->setOutlineColor(sf::Color::Blue);
+	this->setOutlineThickness(10);
 }
 
 Ball::~Ball()
 {
 	//ball destructor
-	//blah
 }
