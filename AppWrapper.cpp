@@ -1,26 +1,77 @@
 #include "AppWrapper.h"
 
-AppWrapper::AppWrapper() // Constructor
+// Constructor
+AppWrapper::AppWrapper() 
 {
+	mNumPlayers = 1;
+	mScore = 0;
 	createGameBox();
 }
 
+// Main gameplay
 void AppWrapper::runGame()
 {
-	sf::RenderWindow window(sf::VideoMode(840, 1450), "Totally awesome game!");
+	// Create a window
+	sf::RenderWindow window(sf::VideoMode(840, 1450), "PA9 Game!");
+	window.setFramerateLimit(60); // Sets framerate to 60 to lower CPU usage
 
 	while (window.isOpen())
 	{
-		window.draw(mBox[0]);
-		window.draw(mBox[1]);
-		window.draw(mBox[2]);
-		window.draw(mBox[3]);
+		sf::Event event;
+		while (window.pollEvent(event)) // If something happens, go into the look
+		{
+			window.clear(); // Clears previous frame
 
-		window.display();
+			// Close window if X'd out
+			if (event.type == sf::Event::Closed) window.close(); 
+			
+			// If a key was pressed
+			if (event.type == sf::Event::KeyPressed)
+			{
+				// If the key pressed was space
+				if (event.key.code == sf::Keyboard::Space)
+				{
+					// Switch the bottom wall to solid or dashed
+					if (mDashedWall[1].getSolid() == true) mDashedWall[1].setSolid(false);
+					else mDashedWall[1].setSolid(true);
+				}
+			}
+			
+			// Updates the full game box and displays	
+			printGameBox(window);
+			window.display();
+			
+		}
 	}
 }
 
+// Creates the gamebox and sets positions
 void AppWrapper::createGameBox()
 {
-	// Need to add this code. Creating a dashed line isn't super easy
+	// Left and right sides
+	mSolidWall[0].setPosition(sf::Vector2f(100,100));
+	mSolidWall[1].setPosition(sf::Vector2f(700,100));
+	
+	// Top side
+	mDashedWall[0].setXPos(110);
+	mDashedWall[0].setyPos(100);
+
+	// Right side
+	mDashedWall[1].setXPos(110);
+	mDashedWall[1].setyPos(1270);
+
+	// Sets top to solid if player is only one
+	if (mNumPlayers == 1) mDashedWall[0].setSolid(true);
+}
+
+// Prints all 4 walls
+void AppWrapper::printGameBox(sf::RenderWindow &window)
+{
+	// Left and right sides
+	window.draw(mSolidWall[0]);
+	window.draw(mSolidWall[1]);
+
+	// Top and bottom sides
+	mDashedWall[0].drawWall(window);
+	mDashedWall[1].drawWall(window);
 }

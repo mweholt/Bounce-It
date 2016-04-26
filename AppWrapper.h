@@ -1,8 +1,13 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include "Wall.h"
+#include <iostream>
+#include "DashedWall.h"
+#include "SolidWall.h"
 #include "Ball.h"
+
+using std::cout;
+using std::endl;
 
 // Manages the game board and gameplay of the game
 class AppWrapper
@@ -14,9 +19,14 @@ class AppWrapper
 		void runGame();
 
 	private:
-		Wall mBox[4];
+		DashedWall mDashedWall[2];
+		SolidWall mSolidWall[2];
 		Ball mBall;
-		int mScore;
 
+		int mScore;
+		int mNumPlayers;
+
+		// Helper functions
 		void createGameBox();
+		void printGameBox(sf::RenderWindow &window);
 };
