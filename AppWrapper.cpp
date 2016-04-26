@@ -12,14 +12,15 @@ AppWrapper::AppWrapper()
 void AppWrapper::runGame()
 {
 	// Create a window
-	sf::RenderWindow window(sf::VideoMode(840, 1450), "Totally awesome game!");
+	sf::RenderWindow window(sf::VideoMode(840, 1450), "PA9 Game!");
+	window.setFramerateLimit(60); // Sets framerate to 60 to lower CPU usage
 
 	while (window.isOpen())
 	{
 		sf::Event event;
 		while (window.pollEvent(event)) // If something happens, go into the look
 		{
-			window.clear();
+			window.clear(); // Clears previous frame
 
 			// Close window if X'd out
 			if (event.type == sf::Event::Closed) window.close(); 
@@ -35,7 +36,8 @@ void AppWrapper::runGame()
 					else mDashedWall[1].setSolid(true);
 				}
 			}
-				
+			
+			// Updates the full game box and displays	
 			printGameBox(window);
 			window.display();
 			
@@ -46,23 +48,30 @@ void AppWrapper::runGame()
 // Creates the gamebox and sets positions
 void AppWrapper::createGameBox()
 {
+	// Left and right sides
 	mSolidWall[0].setPosition(sf::Vector2f(100,100));
 	mSolidWall[1].setPosition(sf::Vector2f(700,100));
 	
+	// Top side
 	mDashedWall[0].setXPos(110);
 	mDashedWall[0].setyPos(100);
 
+	// Right side
 	mDashedWall[1].setXPos(110);
 	mDashedWall[1].setyPos(1270);
 
+	// Sets top to solid if player is only one
 	if (mNumPlayers == 1) mDashedWall[0].setSolid(true);
 }
 
 // Prints all 4 walls
 void AppWrapper::printGameBox(sf::RenderWindow &window)
 {
+	// Left and right sides
 	window.draw(mSolidWall[0]);
 	window.draw(mSolidWall[1]);
+
+	// Top and bottom sides
 	mDashedWall[0].drawWall(window);
 	mDashedWall[1].drawWall(window);
 }

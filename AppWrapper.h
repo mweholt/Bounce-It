@@ -26,6 +26,7 @@ class AppWrapper
 		int mScore;
 		int mNumPlayers;
 
+		// Helper functions
 		void createGameBox();
 		void printGameBox(sf::RenderWindow &window);
 };

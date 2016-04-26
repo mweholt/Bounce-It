@@ -4,9 +4,10 @@
 	DashedWall::DashedWall(int x, int y) 
 	{
 		std::cout << "Inside DashedWall's Constructor!" << std::endl;
-		mIsSolid = true;
+		mIsSolid = true; // Defaults to a solid wall
 
-		mSolidWall.setSize(sf::Vector2f(600,30));
+		// The solid wall only needs one line, so might as well do it here
+		mSolidWall.setSize(sf::Vector2f(600,30)); 
 	}
 // Destructor
 	DashedWall::~DashedWall()
@@ -17,26 +18,27 @@
 // Setters
 	void DashedWall::setXPos(const int newX)
 	{
-		mXPos = newX;
-		createDashedArray(); // Calls helper function to update array
-		mSolidWall.setPosition(sf::Vector2f(mXPos, mYPos));
+		mXPos = newX; // Updates private member variable
+		createDashedArray(); // Calls helper function to update dashed array
+		mSolidWall.setPosition(sf::Vector2f(mXPos, mYPos)); // Updates solid line
 	}
 
 	void DashedWall::setyPos(const int newY)
 	{
 		mYPos = newY;
-		createDashedArray(); // Calls helper function to update array
-		mSolidWall.setPosition(sf::Vector2f(mXPos, mYPos));
+		createDashedArray(); // Calls helper function to update dashed array
+		mSolidWall.setPosition(sf::Vector2f(mXPos, mYPos)); // Updates solid line
 	}
 	
 	void DashedWall::setSolid(bool isSolid)
 	{
+		// Sets the member variable
 		mIsSolid = isSolid;
-
 	}
 
 	bool DashedWall::getSolid() const
 	{
+		// Returns member variable
 		return mIsSolid;
 	}
 
@@ -60,9 +62,9 @@
 
 		if (!mIsSolid) // Checks if the wall is not solid
 		{ 
-			
 			for (i = 0; i < 8; i++)
 			{
+				// Draws each dashed line
 				window.draw(mDashedWall[i]);
 			}
 		}
