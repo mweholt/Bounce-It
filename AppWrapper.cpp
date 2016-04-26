@@ -32,8 +32,16 @@ void AppWrapper::runGame()
 				if (event.key.code == sf::Keyboard::Space)
 				{
 					// Switch the bottom wall to solid or dashed
-					if (mDashedWall[1].getSolid() == true) mDashedWall[1].setSolid(false);
-					else mDashedWall[1].setSolid(true);
+					if (mDashedWall[1].getSolid() == true) 
+					{
+						mDashedWall[1].setSolid(false);
+						cout << "Changing bottom line to dashed." << endl;
+					}
+					else 
+					{
+						mDashedWall[1].setSolid(true);
+						cout << "Changing bottom line to solid." << endl;
+					}
 				}
 			}
 			
