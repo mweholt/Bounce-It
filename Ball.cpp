@@ -1,7 +1,7 @@
 #include "Ball.h"
 
 // Constructor
-Ball::Ball() : CircleShape(20.f)
+Ball::Ball() : CircleShape(10.f)
 {
 	this->setFillColor(sf::Color::Red);
 	this->setOutlineColor(sf::Color::Blue);
