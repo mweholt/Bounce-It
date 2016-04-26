@@ -29,4 +29,5 @@ class AppWrapper
 		// Helper functions
 		void createGameBox();
 		void printGameBox(sf::RenderWindow &window);
+		void startMenu(sf::RenderWindow &window);
 };

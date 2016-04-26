@@ -16,6 +16,9 @@ void AppWrapper::runGame()
 	sf::RenderWindow window(sf::VideoMode(840, 1450), "PA9 Game!");
 	window.setFramerateLimit(60); // Sets framerate to 60 to lower CPU usage
 
+	// Create a clock
+	sf::Clock clock;
+
 	while (window.isOpen())
 	{
 		window.clear(); // Clears previous frame
@@ -87,4 +90,14 @@ void AppWrapper::printGameBox(sf::RenderWindow &window)
 	// Top and bottom sides
 	mDashedWall[0].drawWall(window);
 	mDashedWall[1].drawWall(window);
+}
+
+void AppWrapper::startMenu(sf::RenderWindow & window)
+{
+	window.clear();
+
+	// lookup sf::text
+
+
+	window.display();
 }
