@@ -10,6 +10,6 @@ Ball::Ball() : CircleShape(20.f)
 
 Ball::~Ball()
 {
-	std::cout << "Inside Ball's destructor." << std::endl;
+	std::cout << "Inside Ball's destructor!" << std::endl;
 }
 

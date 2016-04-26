@@ -37,11 +37,11 @@ int SFMLDemo()
 				// which key is pressed
 				if (event.key.code == sf::Keyboard::W) // move up
 				{
-					gameBall.setPosition(10, 10 + (--i));
+					gameBall.setPosition(10.f, 10.f + (--i));
 				}
 				if (event.key.code == sf::Keyboard::S) // move down
 				{
-					gameBall.setPosition(10, 10 + (++i));
+					gameBall.setPosition(10.f, 10.f + (++i));
 				}
 			}
 		}
