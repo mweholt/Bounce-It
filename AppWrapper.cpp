@@ -3,6 +3,8 @@
 // Constructor
 AppWrapper::AppWrapper() 
 {
+	mNumPlayers = 1;
+	mScore = 0;
 	createGameBox();
 }
 
@@ -17,14 +19,26 @@ void AppWrapper::runGame()
 		sf::Event event;
 		while (window.pollEvent(event)) // If something happens, go into the look
 		{
+			window.clear();
+
 			// Close window if X'd out
 			if (event.type == sf::Event::Closed) window.close(); 
 			
-			else
+			// If a key was pressed
+			if (event.type == sf::Event::KeyPressed)
 			{
-				printGameBox(window);
-				window.display();
+				// If the key pressed was space
+				if (event.key.code == sf::Keyboard::Space)
+				{
+					// Switch the bottom wall to solid or dashed
+					if (mDashedWall[1].getSolid() == true) mDashedWall[1].setSolid(false);
+					else mDashedWall[1].setSolid(true);
+				}
 			}
+				
+			printGameBox(window);
+			window.display();
+			
 		}
 	}
 }
@@ -40,6 +54,8 @@ void AppWrapper::createGameBox()
 
 	mDashedWall[1].setXPos(110);
 	mDashedWall[1].setyPos(1270);
+
+	if (mNumPlayers == 1) mDashedWall[0].setSolid(true);
 }
 
 // Prints all 4 walls

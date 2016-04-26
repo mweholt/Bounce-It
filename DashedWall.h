@@ -4,6 +4,9 @@
 #include <iostream>
 #include "sfLine.h"
 
+using std::cout;
+using std::endl;
+
 // The dashed wall class defaults to dashed, but will turn solid if mIsSolid is true.
 class DashedWall : public sf::RectangleShape
 {
@@ -18,6 +21,7 @@ public:
 	void setXPos (const int newX);
 	void setyPos (const int newY);
 	void setSolid(bool isSolid);
+	bool getSolid() const;
 
 private:
 	bool mIsSolid;
