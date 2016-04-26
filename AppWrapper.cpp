@@ -6,6 +6,7 @@ AppWrapper::AppWrapper()
 	mNumPlayers = 1;
 	mScore = 0;
 	createGameBox();
+	mBall.setPosition(420, 725); //setting initial game ball position to center of game board
 }
 
 // Main gameplay
@@ -14,16 +15,14 @@ void AppWrapper::runGame()
 	// Create a window
 	sf::RenderWindow window(sf::VideoMode(840, 1450), "PA9 Game!");
 	window.setFramerateLimit(60); // Sets framerate to 60 to lower CPU usage
-	
-	Ball gameBall; //creating gameBall
-	gameBall.setPosition(420, 725); //setting initial game ball position to center of game board
 
 	while (window.isOpen())
 	{
+		window.clear(); // Clears previous frame
+
 		sf::Event event;
 		while (window.pollEvent(event)) // If something happens, go into the look
 		{
-			window.clear(); // Clears previous frame
 
 			// Close window if X'd out
 			if (event.type == sf::Event::Closed) window.close();
@@ -47,12 +46,12 @@ void AppWrapper::runGame()
 					}
 				}
 			}
-			//ball movement
-			gameBall.setPosition(gameBall.getPosition().x + 1, gameBall.getPosition().y); //moving the gameball by 1 in the x direction
-
 		}
 		// Updates the full game box and displays	
-		window.draw(gameBall);
+		// ball movement
+		mBall.setPosition(mBall.getPosition().x + 1, mBall.getPosition().y); //moving the gameball by 1 in the x direction
+		window.draw(mBall);
+
 		printGameBox(window);
 		window.display();
 		
