@@ -5,7 +5,7 @@ Ball::Ball() : CircleShape(15.f)
 {
 	this->setFillColor(sf::Color::Red);
 	this->setOutlineColor(sf::Color::Blue);
-	this->setOutlineThickness(5);
+	this->setOutlineThickness(8);
 
 	mBallAngle = 0;
 	mBallSpeed = 6.f;

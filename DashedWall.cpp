@@ -8,6 +8,7 @@
 
 		// The solid wall only needs one line, so might as well do it here
 		mSolidWall.setSize(sf::Vector2f(600,30)); 
+		mSolidWall.setFillColor((sf::Color(52, 152, 219, 255)));
 	}
 // Destructor
 	DashedWall::~DashedWall()
@@ -52,6 +53,7 @@
 		{
 			mDashedWall[i].setPosition(sf::Vector2f((mXPos + ((i*50)+(i*30))), mYPos));
 			mDashedWall[i].setSize(sf::Vector2f(50, 30));
+			mDashedWall[i].setFillColor(sf::Color(52, 152, 219, 255));
 		}
 	}
 

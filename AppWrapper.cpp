@@ -20,6 +20,15 @@ void AppWrapper::runGame()
 	sf::RenderWindow window(sf::VideoMode(840, 1450), "PA9 Game!");
 	window.setFramerateLimit(60); // Sets framerate to 60 to lower CPU usage
 
+	// Set wall colors
+	mSolidWall[0].setFillColor((sf::Color(52, 152, 219, 255)));
+	mSolidWall[1].setFillColor((sf::Color(52, 152, 219, 255)));
+	mDashedWall[0].setFillColor((sf::Color(52, 152, 219, 255)));
+
+	// Set ball color
+	mBall.setFillColor(sf::Color(52, 152, 219, 255));
+	mBall.setOutlineColor(sf::Color(231,76,60,255));
+
 	sf::Clock wallTimer;
 
 	// Set a random angle that is still pointing upwards
@@ -28,7 +37,7 @@ void AppWrapper::runGame()
 
 	while (window.isOpen())
 	{
-		window.clear(); // Clears previous frame
+		window.clear((sf::Color(236, 240, 241, 255))); // Clears previous frame
 
 		sf::Event event;
 		
@@ -63,6 +72,7 @@ void AppWrapper::runGame()
 					}
 				}
 			}
+
 		}
 
 		// If 1.5 seconds has passed since bar turned solid then reset
@@ -78,10 +88,10 @@ void AppWrapper::runGame()
 		switch (isColision())
 		{
 			case 1: // Left
-				mBall.setAngle(PI - mBall.getAngle() + (std::rand() % 20) * PI / 180);
+				mBall.setAngle(PI - mBall.getAngle() + (std::rand() % 10) * PI / 180);
 				break;
 			case 2: // Right
-				mBall.setAngle(PI - mBall.getAngle() + (std::rand() % 20) * PI / 180);
+				mBall.setAngle(PI - mBall.getAngle() + (std::rand() % 10) * PI / 180);
 				break;
 			case 4: // Bottom
 				mBall.setAngle(-mBall.getAngle());
@@ -99,6 +109,8 @@ void AppWrapper::runGame()
 			default:
 				break;
 		}
+
+		
 
 		// Updates the full game box and displays	
 		window.draw(mBall);
