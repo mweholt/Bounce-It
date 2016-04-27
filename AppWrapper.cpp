@@ -12,18 +12,29 @@ AppWrapper::AppWrapper()
 // Main gameplay
 void AppWrapper::runGame()
 {
+	bool hasWallTimePassed = true;
+
 	// Create a window
 	sf::RenderWindow window(sf::VideoMode(840, 1450), "PA9 Game!");
 	window.setFramerateLimit(60); // Sets framerate to 60 to lower CPU usage
+
+	sf::Clock wallTimer;
 
 	while (window.isOpen())
 	{
 		window.clear(); // Clears previous frame
 
 		sf::Event event;
-		while (window.pollEvent(event)) // If something happens, go into the look
+		
+		//Check if 3 seconds have passed by
+		if (wallTimer.getElapsedTime().asSeconds() > 0.5)
 		{
+			hasWallTimePassed = true;
+			//cout << "3 seconds has passed." << endl;
+		}
 
+		if (window.pollEvent(event)) // If something happens, go into the loop
+		{
 			// Close window if X'd out
 			if (event.type == sf::Event::Closed) window.close();
 
@@ -33,25 +44,33 @@ void AppWrapper::runGame()
 				// If the key pressed was space
 				if (event.key.code == sf::Keyboard::Space)
 				{
-					// Switch the bottom wall to solid or dashed
-					if (mDashedWall[1].getSolid() == true) 
+					// Only allow line to be turned to solid if 3 seconds has passed
+					if (hasWallTimePassed)
 					{
-						mDashedWall[1].setSolid(false);
-						cout << "Changing bottom line to dashed." << endl;
-					}
-					else 
-					{
+						wallTimer.restart(); // Reset timer
+
+						// Switch the bottom wall to solid or dashed
 						mDashedWall[1].setSolid(true);
-						cout << "Changing bottom line to solid." << endl;
+						//cout << "Setting wall to solid." << endl;
+
+						hasWallTimePassed = false;
 					}
 				}
 			}
 		}
-		// Updates the full game box and displays	
+
+		// If 1.5 seconds has passed since bar turned solid then reset
+		if (hasWallTimePassed)
+		{
+			mDashedWall[1].setSolid(false);
+			//cout << "Setting wall to dashed." << endl;
+		}
+		
 		// ball movement
 		mBall.setPosition(mBall.getPosition().x + 1, mBall.getPosition().y); //moving the gameball by 1 in the x direction
 		window.draw(mBall);
 
+		// Updates the full game box and displays	
 		printGameBox(window);
 		window.display();
 		
