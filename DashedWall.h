@@ -2,7 +2,6 @@
 
 #include <SFML/Graphics.hpp>
 #include <iostream>
-#include "sfLine.h"
 
 using std::cout;
 using std::endl;

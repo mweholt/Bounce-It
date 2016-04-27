@@ -6,25 +6,35 @@ AppWrapper::AppWrapper()
 	mNumPlayers = 1;
 	mScore = 0;
 	createGameBox();
+	mBall.setPosition(420, 725); //setting initial game ball position to center of game board
 }
 
 // Main gameplay
 void AppWrapper::runGame()
 {
+	bool hasWallTimePassed = true;
+
 	// Create a window
 	sf::RenderWindow window(sf::VideoMode(840, 1450), "PA9 Game!");
 	window.setFramerateLimit(60); // Sets framerate to 60 to lower CPU usage
-	
-	Ball gameBall; //creating gameBall
-	gameBall.setPosition(420, 725); //setting initial game ball position to center of game board
+
+	sf::Clock wallTimer;
 
 	while (window.isOpen())
 	{
-		sf::Event event;
-		while (window.pollEvent(event)) // If something happens, go into the look
-		{
-			window.clear(); // Clears previous frame
+		window.clear(); // Clears previous frame
 
+		sf::Event event;
+		
+		//Check if 3 seconds have passed by
+		if (wallTimer.getElapsedTime().asSeconds() > 0.5)
+		{
+			hasWallTimePassed = true;
+			//cout << "3 seconds has passed." << endl;
+		}
+
+		if (window.pollEvent(event)) // If something happens, go into the loop
+		{
 			// Close window if X'd out
 			if (event.type == sf::Event::Closed) window.close();
 
@@ -34,17 +44,33 @@ void AppWrapper::runGame()
 				// If the key pressed was space
 				if (event.key.code == sf::Keyboard::Space)
 				{
-					// Switch the bottom wall to solid or dashed
-					if (mDashedWall[1].getSolid() == true) mDashedWall[1].setSolid(false);
-					else mDashedWall[1].setSolid(true);
+					// Only allow line to be turned to solid if 3 seconds has passed
+					if (hasWallTimePassed)
+					{
+						wallTimer.restart(); // Reset timer
+
+						// Switch the bottom wall to solid or dashed
+						mDashedWall[1].setSolid(true);
+						//cout << "Setting wall to solid." << endl;
+
+						hasWallTimePassed = false;
+					}
 				}
 			}
-			//ball movement
-			gameBall.setPosition(gameBall.getPosition().x + 1, gameBall.getPosition().y); //moving the gameball by 1 in the x direction
-
 		}
+
+		// If 1.5 seconds has passed since bar turned solid then reset
+		if (hasWallTimePassed)
+		{
+			mDashedWall[1].setSolid(false);
+			//cout << "Setting wall to dashed." << endl;
+		}
+		
+		// ball movement
+		mBall.setPosition(mBall.getPosition().x + 1, mBall.getPosition().y); //moving the gameball by 1 in the x direction
+		window.draw(mBall);
+
 		// Updates the full game box and displays	
-		window.draw(gameBall);
 		printGameBox(window);
 		window.display();
 		
