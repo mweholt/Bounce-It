@@ -9,4 +9,12 @@ public:
 	Ball(); //constructor
 	~Ball(); //destructor
 
+	void setSpeed(const float newSpeed);
+	void setAngle(const float newAngle);
+	float getSpeed() const;
+	float getAngle() const;
+
+private:
+	float mBallSpeed;
+	float mBallAngle;
 };
