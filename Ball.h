@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <ctime>
 
 class Ball : public sf::CircleShape
 {

@@ -7,7 +7,6 @@ AppWrapper::AppWrapper()
 	mScore = 0;
 	createGameBox();
 	mBall.setPosition(420, 725); //setting initial game ball position to center of game board
-	mBall.setPosition(420, 725);
 }
 
 // Main gameplay
@@ -15,14 +14,17 @@ void AppWrapper::runGame()
 {
 	bool hasWallTimePassed = true;
 
+	std::srand(static_cast<unsigned int>(std::time(NULL)));
+
 	// Create a window
 	sf::RenderWindow window(sf::VideoMode(840, 1450), "PA9 Game!");
 	window.setFramerateLimit(60); // Sets framerate to 60 to lower CPU usage
 
 	sf::Clock wallTimer;
-	sf::Clock time;
 
-	int xinc = 1, yinc = 1;
+	// Set a random angle that is still pointing upwards
+	mBall.setAngle((std::rand() % 360) + 180 * 2 * PI / 90);
+	cout << "mBall angle is " << mBall.getAngle() << endl;
 
 	while (window.isOpen())
 	{
@@ -67,46 +69,35 @@ void AppWrapper::runGame()
 		if (hasWallTimePassed)
 		{
 			mDashedWall[1].setSolid(false);
-			//cout << "Setting wall to dashed." << endl;
 		}
-
-		// Updates the full game box and displays	
 		
 		//ball movement
-		mBall.setPosition(mBall.getPosition().x + xinc, mBall.getPosition().y + yinc);
+		mBall.move(cos(mBall.getAngle()) * mBall.getSpeed(), sin(mBall.getAngle()) * mBall.getSpeed());
 
-		//checking if the ball has hit any of the gameboard walls
-		if (mBall.getPosition().x < 130.f) //meaning the ball has touched the left wall
+		// Check for colisions
+		switch (isColision())
 		{
-			cout << "mBall has touched left wall" << endl;
-			xinc += 1; //incrementing x
-			xinc = -xinc; //changing trajectory
-		}
-		if (mBall.getPosition().x > 670.f) //meaning the ball has touched the right wall
-		{
-			cout << "mBall has touched right wall" << endl;
-			xinc += 1; //incrementing x
-			xinc = -xinc; //changing trajectory
-		}
-		if (mBall.getPosition().y < 130)//meaning the ball hit the top wall
-		{
-			cout << "mBall has touched the top wall" << endl;
-			yinc += 1; //incrementing y
-			yinc = -yinc;//changing trajectory
-		}
-		if (mBall.getPosition().y > 1240)
-		{
-			cout << "mBall has touched the bottom wall area" << endl;
-			if (mDashedWall[1].getSolid())//means the bottom wall is solid
-			{
-				yinc += 1;//incrementing y
-				yinc = -yinc; //changing trajectory
-			}
-			else //the wall is not formed and the ball will pass through
-			{
-				cout << "You are a loser" << endl;
-				//game over display
-			}
+			case 1: // Left
+				mBall.setAngle(PI - mBall.getAngle() + (std::rand() % 20) * PI / 180);
+				break;
+			case 2: // Right
+				mBall.setAngle(PI - mBall.getAngle() + (std::rand() % 20) * PI / 180);
+				break;
+			case 4: // Bottom
+				mBall.setAngle(-mBall.getAngle());
+				mScore++;
+				mBall.setSpeed(mBall.getSpeed()+1);
+				cout << "Score: " << mScore << endl;
+				cout << "Speed: " << mBall.getSpeed() << endl;
+				break;
+			case 3: // Top
+				mBall.setAngle(-mBall.getAngle());
+				break;
+			case -1:
+				goto endGame;
+			case 0:
+			default:
+				break;
 		}
 
 		// Updates the full game box and displays	
@@ -115,6 +106,9 @@ void AppWrapper::runGame()
 		window.display();
 		
 	}
+
+	endGame:
+		window.clear();
 }
 
 // Creates the gamebox and sets positions
@@ -146,4 +140,34 @@ void AppWrapper::printGameBox(sf::RenderWindow &window)
 	// Top and bottom sides
 	mDashedWall[0].drawWall(window);
 	mDashedWall[1].drawWall(window);
+}
+
+int AppWrapper::isColision()
+{
+	//checking if the ball has hit any of the gameboard walls
+	if (mBall.getPosition().x < 130.f) //meaning the ball has touched the left wall
+	{
+		cout << "mBall has touched left wall" << endl;
+		return 1;
+	}
+	if (mBall.getPosition().x > 670.f) //meaning the ball has touched the right wall
+	{
+		cout << "mBall has touched right wall" << endl;
+		return 2;
+	}
+	if (mBall.getPosition().y < 130)//meaning the ball hit the top wall
+	{
+		cout << "mBall has touched the top wall" << endl;
+		return 3;
+	}
+	if (mBall.getPosition().y > 1240)
+	{
+		cout << "mBall has touched the bottom wall." << endl;
+		if (mDashedWall[1].getSolid() == false)
+		{
+			cout << "You Lose!" << endl;
+			return -1;
+		}
+		return 4;
+	}
 }

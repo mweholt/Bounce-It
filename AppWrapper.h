@@ -5,10 +5,12 @@
 #include "DashedWall.h"
 #include "SolidWall.h"
 #include "Ball.h"
-#include <math.h>
+#include <cmath>
 
 using std::cout;
 using std::endl;
+
+#define PI 3.14159
 
 // Manages the game board and gameplay of the game
 class AppWrapper
@@ -30,4 +32,5 @@ class AppWrapper
 		// Helper functions
 		void createGameBox();
 		void printGameBox(sf::RenderWindow &window);
+		int isColision();
 };

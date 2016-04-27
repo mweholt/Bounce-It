@@ -1,14 +1,14 @@
 #include "Ball.h"
 
 // Constructor
-Ball::Ball() : CircleShape(10.f)
+Ball::Ball() : CircleShape(15.f)
 {
 	this->setFillColor(sf::Color::Red);
 	this->setOutlineColor(sf::Color::Blue);
 	this->setOutlineThickness(5);
 
-	mBallAngle = 0.f;
-	mBallSpeed = 400.f;
+	mBallAngle = 0;
+	mBallSpeed = 6.f;
 }
 
 // Destructor
