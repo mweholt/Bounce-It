@@ -4,7 +4,7 @@
 	DashedWall::DashedWall(int x, int y) 
 	{
 		std::cout << "Inside DashedWall's Constructor!" << std::endl;
-		mIsSolid = true; // Defaults to a solid wall
+		mIsSolid = false; // Defaults to a solid wall
 
 		// The solid wall only needs one line, so might as well do it here
 		mSolidWall.setSize(sf::Vector2f(600,30)); 
