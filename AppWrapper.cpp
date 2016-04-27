@@ -6,7 +6,11 @@ AppWrapper::AppWrapper()
 	mNumPlayers = 1;
 	mScore = 0;
 	createGameBox();
+<<<<<<< HEAD
 	mBall.setPosition(420, 725); //setting initial game ball position to center of game board
+=======
+	mBall.setPosition(420, 725);
+>>>>>>> origin/Lauren
 }
 
 // Main gameplay
@@ -17,8 +21,14 @@ void AppWrapper::runGame()
 	// Create a window
 	sf::RenderWindow window(sf::VideoMode(840, 1450), "PA9 Game!");
 	window.setFramerateLimit(60); // Sets framerate to 60 to lower CPU usage
+<<<<<<< HEAD
 
 	sf::Clock wallTimer;
+=======
+	sf::Clock time;
+
+	int xinc = 1, yinc = 1;
+>>>>>>> origin/Lauren
 
 	while (window.isOpen())
 	{
@@ -58,6 +68,7 @@ void AppWrapper::runGame()
 				}
 			}
 		}
+<<<<<<< HEAD
 
 		// If 1.5 seconds has passed since bar turned solid then reset
 		if (hasWallTimePassed)
@@ -71,6 +82,40 @@ void AppWrapper::runGame()
 		window.draw(mBall);
 
 		// Updates the full game box and displays	
+=======
+		
+		//ball movement
+		mBall.setPosition(mBall.getPosition().x + xinc, mBall.getPosition().y + yinc);
+
+		//checking if the ball has hit any of the gameboard walls
+		if (mBall.getPosition().x < 130.f) //meaning the ball has touched the left wall
+		{
+			cout << "mBall has touched left wall" << endl;
+			xinc += 1; //incrementing x
+			xinc = -xinc; //changing trajectory
+		}
+		if (mBall.getPosition().x > 670.f) //meaning the ball has touched the right wall
+		{
+			cout << "mBall has touched right wall" << endl;
+			xinc += 1; //incrementing x
+			xinc = -xinc; //changing trajectory
+		}
+		if (mBall.getPosition().y < 130)//meaning the ball hit the top wall
+		{
+			cout << "mBall has touched the top wall" << endl;
+			yinc += 1; //incrementing y
+			yinc = -yinc;//changing trajectory
+		}
+		if (mBall.getPosition().y > 1240)
+		{
+			cout << "mBall has touched the bottom wall area" << endl;
+			yinc += 1;//incrementing y
+			yinc = -yinc; //changing trajectory
+		}
+
+		// Updates the full game box and displays	
+		window.draw(mBall);
+>>>>>>> origin/Lauren
 		printGameBox(window);
 		window.display();
 		
