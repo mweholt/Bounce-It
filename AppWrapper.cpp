@@ -6,6 +6,7 @@ AppWrapper::AppWrapper()
 	mNumPlayers = 1;
 	mScore = 0;
 	createGameBox();
+	mBall.setPosition(420, 725);
 }
 
 // Main gameplay
@@ -14,9 +15,9 @@ void AppWrapper::runGame()
 	// Create a window
 	sf::RenderWindow window(sf::VideoMode(840, 1450), "PA9 Game!");
 	window.setFramerateLimit(60); // Sets framerate to 60 to lower CPU usage
-	
-	Ball gameBall; //creating gameBall
-	gameBall.setPosition(420, 725); //setting initial game ball position to center of game board
+	sf::Clock time;
+
+	int xinc = 1, yinc = 1;
 
 	while (window.isOpen())
 	{
@@ -47,12 +48,39 @@ void AppWrapper::runGame()
 					}
 				}
 			}
-			//ball movement
-			gameBall.setPosition(gameBall.getPosition().x + 1, gameBall.getPosition().y); //moving the gameball by 1 in the x direction
-
 		}
+		
+		//ball movement
+		mBall.setPosition(mBall.getPosition().x + xinc, mBall.getPosition().y + yinc);
+
+		//checking if the ball has hit any of the gameboard walls
+		if (mBall.getPosition().x < 130.f) //meaning the ball has touched the left wall
+		{
+			cout << "mBall has touched left wall" << endl;
+			xinc += 1; //incrementing x
+			xinc = -xinc; //changing trajectory
+		}
+		if (mBall.getPosition().x > 670.f) //meaning the ball has touched the right wall
+		{
+			cout << "mBall has touched right wall" << endl;
+			xinc += 1; //incrementing x
+			xinc = -xinc; //changing trajectory
+		}
+		if (mBall.getPosition().y < 130)//meaning the ball hit the top wall
+		{
+			cout << "mBall has touched the top wall" << endl;
+			yinc += 1; //incrementing y
+			yinc = -yinc;//changing trajectory
+		}
+		if (mBall.getPosition().y > 1240)
+		{
+			cout << "mBall has touched the bottom wall area" << endl;
+			yinc += 1;//incrementing y
+			yinc = -yinc; //changing trajectory
+		}
+
 		// Updates the full game box and displays	
-		window.draw(gameBall);
+		window.draw(mBall);
 		printGameBox(window);
 		window.display();
 		
