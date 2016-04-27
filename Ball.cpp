@@ -7,8 +7,8 @@ Ball::Ball() : CircleShape(10.f)
 	this->setOutlineColor(sf::Color::Blue);
 	this->setOutlineThickness(5);
 
-	mBallAngle = 400.f;
-	mBallSpeed = 0.f;
+	mBallAngle = 0.f;
+	mBallSpeed = 400.f;
 }
 
 // Destructor
