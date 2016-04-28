@@ -16,6 +16,13 @@ void AppWrapper::runGame()
 
 	std::srand(static_cast<unsigned int>(std::time(NULL)));
 
+	// Load sounds
+	sf::SoundBuffer bgrMusicBuffer;
+	bgrMusicBuffer.loadFromFile("music.wav");
+	sf::Sound bgrMusic(bgrMusicBuffer);
+
+	bgrMusic.setLoop(true);
+
 	// Create a window
 	sf::RenderWindow window(sf::VideoMode(840, 1450), "PA9 Game!");
 	window.setFramerateLimit(60); // Sets framerate to 60 to lower CPU usage
@@ -58,6 +65,8 @@ void AppWrapper::runGame()
 
 	window.clear((sf::Color(236, 240, 241, 255)));
 	printMenu(window,isStart);
+
+	bgrMusic.play();
 
 	while (window.isOpen())
 	{
