@@ -8,7 +8,7 @@ Ball::Ball() : CircleShape(15.f)
 	this->setOutlineThickness(8);
 
 	mBallAngle = 0;
-	mBallSpeed = 6.f;
+	mBallSpeed = 10.f;
 }
 
 // Destructor

@@ -33,4 +33,5 @@ class AppWrapper
 		void createGameBox();
 		void printGameBox(sf::RenderWindow &window);
 		int isColision();
+		void printMenu(sf::RenderWindow &window, bool isStart);
 };

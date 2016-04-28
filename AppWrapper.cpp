@@ -6,13 +6,13 @@ AppWrapper::AppWrapper()
 	mNumPlayers = 1;
 	mScore = 0;
 	createGameBox();
-	mBall.setPosition(420, 725); //setting initial game ball position to center of game board
 }
 
 // Main gameplay
 void AppWrapper::runGame()
 {
 	bool hasWallTimePassed = true;
+	bool isStart = true;
 
 	std::srand(static_cast<unsigned int>(std::time(NULL)));
 
@@ -25,19 +25,45 @@ void AppWrapper::runGame()
 	mSolidWall[1].setFillColor((sf::Color(52, 152, 219, 255)));
 	mDashedWall[0].setFillColor((sf::Color(52, 152, 219, 255)));
 
+	// Create text for score title
+	sf::Font font;
+	font.loadFromFile("sansation.ttf");
+	sf::Text scoreTitle("SCORE:", font);
+	scoreTitle.setCharacterSize(100);
+	scoreTitle.setStyle(sf::Text::Bold);
+	scoreTitle.setColor(sf::Color(52, 152, 219, 100));
+	scoreTitle.move(scoreTitle.getPosition().x + 235, 500);
+
+	// Create text for score
+	sf::Text score(std::to_string(mScore), font);
+	score.setCharacterSize(200);
+	score.setStyle(sf::Text::Bold);
+	score.setColor(sf::Color(52, 152, 219, 100));
+	score.move(score.getPosition().x + 345, 600);
+
 	// Set ball color
 	mBall.setFillColor(sf::Color(52, 152, 219, 255));
 	mBall.setOutlineColor(sf::Color(231,76,60,255));
 
+	// Clock to keep track of how long the lower wall is solid for
 	sf::Clock wallTimer;
 
+	// Restart point
+	endGame:
+	mBall.setPosition(420, 725); //setting initial game ball position to center of game board
+
 	// Set a random angle that is still pointing upwards
-	mBall.setAngle((std::rand() % 360) + 180 * 2 * PI / 90);
+	mBall.setAngle((std::rand() % 180) +180 * 2 * PI / 90);
 	cout << "mBall angle is " << mBall.getAngle() << endl;
+
+	window.clear((sf::Color(236, 240, 241, 255)));
+	printMenu(window,isStart);
 
 	while (window.isOpen())
 	{
 		window.clear((sf::Color(236, 240, 241, 255))); // Clears previous frame
+		window.draw(scoreTitle);
+		window.draw(score);
 
 		sf::Event event;
 		
@@ -89,21 +115,31 @@ void AppWrapper::runGame()
 		{
 			case 1: // Left
 				mBall.setAngle(PI - mBall.getAngle() + (std::rand() % 10) * PI / 180);
+				cout << "Angle is: " << mBall.getAngle() << endl;
 				break;
 			case 2: // Right
 				mBall.setAngle(PI - mBall.getAngle() + (std::rand() % 10) * PI / 180);
+				cout << "Angle is: " << mBall.getAngle() << endl;
 				break;
 			case 4: // Bottom
 				mBall.setAngle(-mBall.getAngle());
+				cout << "Angle is: " << mBall.getAngle() << endl;
 				mScore++;
-				mBall.setSpeed(mBall.getSpeed()+1);
+				score.setString(std::to_string(mScore));
+
+				//Update score formatting
+				 if (mScore == 10) score.move(-30,0);
+
+				mBall.setSpeed(mBall.getSpeed()+2);
 				cout << "Score: " << mScore << endl;
 				cout << "Speed: " << mBall.getSpeed() << endl;
 				break;
 			case 3: // Top
 				mBall.setAngle(-mBall.getAngle());
+				cout << "Angle is: " << mBall.getAngle() << endl;
 				break;
 			case -1:
+				isStart = false;
 				goto endGame;
 			case 0:
 			default:
@@ -118,9 +154,6 @@ void AppWrapper::runGame()
 		window.display();
 		
 	}
-
-	endGame:
-		window.clear();
 }
 
 // Creates the gamebox and sets positions
@@ -167,12 +200,12 @@ int AppWrapper::isColision()
 		cout << "mBall has touched right wall" << endl;
 		return 2;
 	}
-	if (mBall.getPosition().y < 130)//meaning the ball hit the top wall
+	if (mBall.getPosition().y < 130.f)//meaning the ball hit the top wall
 	{
 		cout << "mBall has touched the top wall" << endl;
 		return 3;
 	}
-	if (mBall.getPosition().y > 1240)
+	if (mBall.getPosition().y > 1240.f)
 	{
 		cout << "mBall has touched the bottom wall." << endl;
 		if (mDashedWall[1].getSolid() == false)
@@ -181,5 +214,61 @@ int AppWrapper::isColision()
 			return -1;
 		}
 		return 4;
+	}
+}
+
+void AppWrapper::printMenu(sf::RenderWindow &window, bool isStart)
+{
+	// Declare and load a font
+	sf::Font font;
+	font.loadFromFile("sansation.ttf");
+
+	sf::Text title("Bounce It!", font);
+	title.setCharacterSize(150);
+	title.setStyle(sf::Text::Bold);
+	title.setColor(sf::Color(52, 152, 219, 255));
+	title.move(title.getPosition().x+70,500);
+
+	if (isStart == true)
+	{
+		// First time playing
+		sf::Text pressSpaceStart("Press SPACE to start.", font);
+		pressSpaceStart.setCharacterSize(50);
+		pressSpaceStart.setStyle(sf::Text::Bold);
+		pressSpaceStart.setColor(sf::Color(231, 76, 60, 255));
+		pressSpaceStart.move(pressSpaceStart.getPosition().x + 170, 800);
+		window.draw(pressSpaceStart);
+	}
+	else
+	{
+		// Game was lost
+		sf::Text pressSpaceRestart("Press SPACE to restart.", font);
+		pressSpaceRestart.setCharacterSize(50);
+		pressSpaceRestart.setStyle(sf::Text::Bold);
+		pressSpaceRestart.setColor(sf::Color(231, 76, 60, 255));
+		pressSpaceRestart.move(pressSpaceRestart.getPosition().x + 155, 800);
+		window.draw(pressSpaceRestart);
+	}
+
+	window.draw(title);
+	window.display();
+
+	sf::Event event;
+
+	// Wait until space is hit
+	while (window.isOpen())
+	{
+		if (window.pollEvent(event))
+		{
+			// If a key was pressed
+			if (event.type == sf::Event::KeyPressed)
+			{
+				// If the key pressed was space
+				if (event.key.code == sf::Keyboard::Space)
+				{
+					break;
+				}
+			}
+		}
 	}
 }
