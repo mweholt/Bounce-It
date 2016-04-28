@@ -6,11 +6,8 @@ AppWrapper::AppWrapper()
 	mNumPlayers = 1;
 	mScore = 0;
 	createGameBox();
-<<<<<<< HEAD
 	mBall.setPosition(420, 725); //setting initial game ball position to center of game board
-=======
 	mBall.setPosition(420, 725);
->>>>>>> origin/Lauren
 }
 
 // Main gameplay
@@ -21,14 +18,11 @@ void AppWrapper::runGame()
 	// Create a window
 	sf::RenderWindow window(sf::VideoMode(840, 1450), "PA9 Game!");
 	window.setFramerateLimit(60); // Sets framerate to 60 to lower CPU usage
-<<<<<<< HEAD
 
 	sf::Clock wallTimer;
-=======
 	sf::Clock time;
 
 	int xinc = 1, yinc = 1;
->>>>>>> origin/Lauren
 
 	while (window.isOpen())
 	{
@@ -68,7 +62,6 @@ void AppWrapper::runGame()
 				}
 			}
 		}
-<<<<<<< HEAD
 
 		// If 1.5 seconds has passed since bar turned solid then reset
 		if (hasWallTimePassed)
@@ -76,13 +69,8 @@ void AppWrapper::runGame()
 			mDashedWall[1].setSolid(false);
 			//cout << "Setting wall to dashed." << endl;
 		}
-		
-		// ball movement
-		mBall.setPosition(mBall.getPosition().x + 1, mBall.getPosition().y); //moving the gameball by 1 in the x direction
-		window.draw(mBall);
 
 		// Updates the full game box and displays	
-=======
 		
 		//ball movement
 		mBall.setPosition(mBall.getPosition().x + xinc, mBall.getPosition().y + yinc);
@@ -109,13 +97,20 @@ void AppWrapper::runGame()
 		if (mBall.getPosition().y > 1240)
 		{
 			cout << "mBall has touched the bottom wall area" << endl;
-			yinc += 1;//incrementing y
-			yinc = -yinc; //changing trajectory
+			if (mDashedWall[1].getSolid())//means the bottom wall is solid
+			{
+				yinc += 1;//incrementing y
+				yinc = -yinc; //changing trajectory
+			}
+			else //the wall is not formed and the ball will pass through
+			{
+				cout << "You are a loser" << endl;
+				//game over display
+			}
 		}
 
 		// Updates the full game box and displays	
 		window.draw(mBall);
->>>>>>> origin/Lauren
 		printGameBox(window);
 		window.display();
 		
